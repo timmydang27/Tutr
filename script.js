@@ -1,4 +1,4 @@
- /* TO DO 
+   /* TO DO 
   Test to see if an account can be made. 
   If that works, get rid of extra console.log()
   Database stuff
@@ -21,6 +21,7 @@
  var subjectTwo;
  var subjectThree;
  var profileIndex = 0;
+ var uidToAdd = "placeholder";
 
  var firebaseConfig = {
    apiKey: "AIzaSyD-r_ONdcBNyzoFhlsCH9F83TE1NVnmBzg",
@@ -141,23 +142,24 @@
 
  function makeMatches() {
    var ref = firebase.database().ref("data");
-   ref.on('value',makeMatches);
+   ref.on('value',makeMatchesHelper);
  }
 
  
- function makeMatches(data) {
+ function makeMatchesHelper(data) {
+   let matches = [];
    var allData = data.val();
    for (const user1 in allData) {
      for (const user2 in allData) {  
        if (allData[user1]["occupation"] === "Tutee" && allData[user2]["occupation"] === "Tutor") {
-           console.log(user1 + "," + user2);
          if (user1 !== user2) {//iterates through all unique users
            for (const potentialMatch in allData[user1]["matches"]) {
-             if (user2 === allData[user1]["matches"][potentialMatch] && allData[user2]["matches"].includes(user1)) {
+             if (user2 === allData[user1]["matches"][potentialMatch] && Object.values(allData[user2]["matches"]).includes(user1)) {
                matches.push({
                  "Tutor": user1,
                  "Tutee": user2
                });
+               console.log(user1 + "," + user2);
              }
            }  
          }
@@ -168,7 +170,39 @@
    console.log(matches);
    var ref2 = firebase.database().ref("matches");
    ref2.push(matches);
+   updateMyMatches();
 
+ }
+ function updateMyMatches() {
+   var ref = firebase.database().ref("matches");
+   ref.on('value',updateMyMatchesHelper);
+   
+ }
+ function updateMyMatchesHelper(data){
+   var allMatches = data.val();
+   var messageArray = [];
+   for (const id in allMatches) {
+     if (allMatches[id] !== "none") {
+       for (const occupation in allMatches[id][0]) {
+         let message = "";
+         if (occupation === "Tutee") {
+           message += "Tutee is " + allMatches[id][0][occupation]+ ".";
+         }
+         else {
+           message += "Tutor is " + allMatches[id][0][occupation] + "."
+         }
+         if (!messageArray.includes(message)) {
+           messageArray.push(message);
+         }
+         console.log(messageArray)
+       }
+     }
+   }
+   document.getElementById("myMatches").innerHTML="";
+   for (const message of messageArray) {
+     console.log(message);
+     document.getElementById("myMatches").innerHTML+=message;
+   }
  }
 
  function nextProfile() {
@@ -190,6 +224,9 @@
      else {
        document.getElementById("tuteeName").innerHTML = "Tutee: " + allData[uidIndices[profileIndex]]["name"];
 
+       document.getElementById("uid").innerHTML = "Tutee UID: " + uidIndices[profileIndex];
+
+
        document.getElementById("tuteeBio").innerHTML = "Bio: " + allData[uidIndices[profileIndex]]["biography"];
        
 
@@ -200,6 +237,47 @@
 
 
  }
+ function submitMatchTutor() {
+   const tuteeUID = document.getElementById("uid").innerHTML.substring(11);
+   const auth = firebase.auth();
+   const promise = auth.onAuthStateChanged(user =>{
+     //If this works, get rid of this console.log()
+     console.log("check status");
+
+     if(user){
+       console.log("signed in");
+       var ref = firebase.database().ref("data");
+       firebase.database().ref("data/" + tuteeUID+"/matches").push(user.uid);
+
+       // ref.on('value',submitMatchReq(user.uid,tuteeUID));
+     }
+     else{
+       console.log("not logged");
+     }
+   })
+ }
+
+ function submitMatchTutee() {
+   const tutorUID = document.getElementById("uid").innerHTML.substring(11);
+   const auth = firebase.auth();
+   const promise = auth.onAuthStateChanged(user =>{
+     //If this works, get rid of this console.log()
+     console.log("check status");
+
+     if(user){
+       console.log("signed in");
+       var ref = firebase.database().ref("data");
+       firebase.database().ref("data/" + tutorUID+"/matches").push(user.uid);
+       console.log(firebase.database().ref("data/" + tutorUID+"/matches"));
+
+       // ref.on('value',submitMatchReq(user.uid,tuteeUID));
+     }
+     else{
+       console.log("not logged");
+     }
+   })
+ }
+ 
 
  function nextProfileTutor() {
    var ref = firebase.database().ref("data");
@@ -220,6 +298,8 @@
    else {
        document.getElementById("profileName").innerHTML = "Tutor: " + allData[uidIndices[profileIndex]]["name"];
 
+       document.getElementById("uid").innerHTML = "Tutee UID: " + uidIndices[profileIndex];
+
        document.getElementById("tutorBio").innerHTML = "Bio: " + allData[uidIndices[profileIndex]]["biography"];
 
        document.getElementById("tutorSubjects").innerHTML = "Subjects: " + allData[uidIndices[profileIndex]]["subjects"];
@@ -229,39 +309,53 @@
      profileIndex++;
 
  }
-
+ function recordUid (someuid) {
+   uidToAdd = someuid;
+   console.log(uidToAdd);
+ }
  function getUserData(){
-   let uidToAdd;
+   
    const auth = firebase.auth();
     const promise = auth.onAuthStateChanged(user =>{
      //If this works, get rid of this console.log()
      console.log("check status");
+     let uidToAddHelper = "placeholder2";
 
      if(user){
        console.log("signed in");
+       console.log("get user data")
+       first = document.getElementById("firstName").value;
+       last = document.getElementById("lastName").value;
+       email = document.getElementById("myEmail").value;
+       bio = document.getElementById("bio").value;
+       status = document.getElementById("status").value;
+       subjects = document.getElementById("subjects").value;
        console.log(user.uid);
-       uidToAdd(user.uid);
 
+
+
+       const profile = {
+         name: first + " " + last,
+         email: email,
+         biography: bio,
+         subjects: subjects,
+         occupation: status,
+         matches:["none"]
+
+   };
+   dBRef = firebase.database().ref("data/" + user.uid).set(profile);
+   // dBRef = firebase.database().ref("data").update(profile);
+       recordUid(user.uid);
      }
+  
+
      else{
        console.log("not logged");
      }
+ 
    })
-   console.log("get user data")
-   first = document.getElementById("firstName").value;
-   last = document.getElementById("lastName").value;
-   email = document.getElementById("myEmail").value;
-   bio = document.getElementById("bio").value;
-   status = document.getElementById("status").value;
-   subjects = document.getElementById("subjects").value;
 
-   dBRef = firebase.database().ref("data").push({
-     name: first + " " + last,
-     email: email,
-     biography: bio,
-     subjects: subjects,
-     occupation: status
-   });
+
  }
 
  function swipeRight(){
@@ -277,4 +371,5 @@
    
  }
  
+
 

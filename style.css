@@ -1,38 +1,75 @@
-#title{
-    font-size: 800%;
-    text-align: center;
-  }
-  
-  #tuteeTitle{
-    font-size: 300%;
-    text-align: center;
-  }
-  #matches{
-    font-size: 300%;
-    text-align: center;
-  }
-  #signUp{
-    font-size: 300%;
-    text-align: center;
-  }
-  h2{
-    text-align: center;
-  }
-  h3{
-    text-align: center;
-  }
-  h4{
-    text-align: center;
-  }
-  
-  .loggingIn{
-    text-align: center;
-  }
-  .signingUp{
-    text-align: center;
-  }
-  
-  .matchButton{
-    width: 15%;
-    height: 1000%;
-  }
+body {
+    font-family: 'Lora', serif;
+   }
+   
+   h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 350;
+    text-transform: uppercase;
+   }
+   
+   #title{
+     font-size: 800%;
+     text-align: center;
+     color: black;
+   }
+   
+   body{
+     background: #fce1e0; 
+   }
+   
+   #tuteeTitle{
+     font-size: 300%;
+     text-align: center;
+   }
+   #matches{
+     font-size: 300%;
+     text-align: center;
+   }
+   #signUp{
+     font-size: 300%;
+     text-align: center;
+   }
+   h2{
+     text-align: center;
+   }
+   h3{
+     text-align: center;
+   }
+   h4{
+     text-align: center;
+   }
+   
+   .loggingIn{
+     text-align: center;
+   }
+   .signingUp{
+     text-align: center;
+   }
+   
+   .matchButton{
+     width: 15%;
+     height: 1000%;
+   }
+   .flex-container{
+     display: flex;
+     flex-direction: row;
+     flex-wrap: wrap;
+     justify-content: center;
+   
+   }
+   .flex-container > div{
+     padding-top: 10%;
+     padding-bottom: 0%;
+     padding-left: 10%;
+     margin-bottom: none;
+   }
+   
+   
+   img{
+     height: 100px;
+     width: 100px;
+   
+     
+   }
+   
