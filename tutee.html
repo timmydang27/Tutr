@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Tutees</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-analytics.js"></script>
+    <script src="script.js"></script>
+    <h1 id = "tuteeTitle">Tutees find a tutor to match with</h1>
+    <br>
+    <br>
+    <div id = "leftAndRight">
+      <button onclick="nextProfileTutor()" class="matchButton">Swipe Left</button>
+      <button style="float: right"class="matchButton">Swipe Right</button>
+    </div>
+    <h2 id="profileName">Swipe to view profiles</h2>
+      <br>
+      <h3 id="tutorBio">Biography:</h3>
+      <h3 id="tutorSubjects">Subjects: </h3>
+
+    </p>
+    <br>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Sign Up</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-app.js">
+	</script>
+
+	<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+	<script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-auth.js">
+	</script>
+	<script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-database.js">
+	</script>
+	<script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-analytics.js">
+	</script>
+
+	<script src="script.js">
+	</script>
+  <h1>Personal Information</h1>
+  <label for="firstName">First Name</label>
+  <input type="text" id="firstName">
+  <br>
+  <br>
+  <label for="lastName">Last Name</label>
+  <input type="text" id="lastName">
+  <br><br>
+  <label for="myEmail">Email</label>
+  <input type="text" id="myEmail">
+  <br><br>
+  <label for="status">Tutor or Tutee</label>
+  <select id="status" name="status">
+    <option value="Tutor">Tutor</option>
+    <option value="Tutee">Tutee</option> 
+  </select>
+  <br><br>
+  <label for="bio">Biography</label>
+  <input type="text" id="bio">
+  <br><br>
+  <label for="subjects">Enter subjects you can tutor in or need help in separated by commas (i.e. - Phyiscs, Chemistry, Algebra): </label>
+  <input type="text" multiple placeholder="subjects" id="subjects">
+  <button onclick="getUserData()">Submit</button>
+  <button onclick="window.location='match.html'">Next</button>
+ 
+  </body>
+</html>

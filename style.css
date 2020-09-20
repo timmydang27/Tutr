@@ -1,0 +1,38 @@
+#title{
+    font-size: 800%;
+    text-align: center;
+  }
+  
+  #tuteeTitle{
+    font-size: 300%;
+    text-align: center;
+  }
+  #matches{
+    font-size: 300%;
+    text-align: center;
+  }
+  #signUp{
+    font-size: 300%;
+    text-align: center;
+  }
+  h2{
+    text-align: center;
+  }
+  h3{
+    text-align: center;
+  }
+  h4{
+    text-align: center;
+  }
+  
+  .loggingIn{
+    text-align: center;
+  }
+  .signingUp{
+    text-align: center;
+  }
+  
+  .matchButton{
+    width: 15%;
+    height: 1000%;
+  }
